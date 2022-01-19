@@ -1,0 +1,30 @@
+name: release
+
+on:
+  release:
+    types:
+      - created
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Install libcurl headers
+      run: sudo apt install libcurl4-gnutls-dev
+    - name: Checkout repository
+      uses: actions/checkout@v2
+    - name: Download CEF
+      run: wget -O cef.tar.bz2 http://opensource.spotify.com/cefbuilds/cef_binary_80.0.8%2Bgf96cd1d%2Bchromium-80.0.3987.132_linux64_minimal.tar.bz2
+    - name: Extract CEF headers
+      run: tar -xf cef.tar.bz2 --wildcards '*/include' --strip-components=1
+    - name: Run make
+      run: make
+    - name: Attach build artifact to release
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.TOKEN }}
+      with:
+        upload_url: ${{ github.event.release.upload_url }}
+        asset_path: spotify-adblock.so
+        asset_name: spotify-adblock.so
+        asset_content_type: application/octet-stream
