@@ -1,3 +1,4 @@
 *.so
 include/
+curl/
 sim

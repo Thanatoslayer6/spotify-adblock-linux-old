@@ -31,6 +31,7 @@ static const char *whitelist[] = {
     "ap.spotify.com", // audio (access point)
     "*.ap.spotify.com", // resolved access points
     "ap-gae2.spotify.com", // AP
+    "ap-*.spotify.com", // Another AP
     "apresolve.spotify.com", // access point resolving
     "dealer.spotify.com", // player activity (websocket)
     "image-upload.spotify.com", // image uploading
